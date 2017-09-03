@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 理解依赖.
+       小明离开了他女朋友(小蔷)就不能活.
+       小明依赖于小蔷。
+
+       bootstrap 离开了 jQuery 就玩不转.
+       bootstrap依赖于jQuery
+
+    2. 如何解决依赖.
+       让小明拥有小蔷 娶了她.
+
+       使用script:src标签引入jQuery，那么就解决了 bootstrap依赖于jQuery 的问题.
+
+
+    3. AngularJS的内部提供了很多很多的服务.
+       服务: 服务就是1个1个的功能模块. 来实现相对独立的功能的.
+       通俗1点: ng内部有很多很多的功能.每一个功能来做相对应的事情.
+               1个1个的功能模块.
+
+       我们在控制器中默认情况下,是不能直接使用这些服务的.
+       但是某些情况下, 控制器必须要使用这些服务才可以完成功能.
+
+       比如,控制器必须要使用$scope服务才可以完成相对应的功能,必须.
+       我们就说控制器依赖于$scope服务.
+
+    4. AngularJS中解决这种依赖关系的方案: 依赖注入. 
+
+
+    5. 行内式注入
+       创建控制器的时候,第2个参数是1个数组.
+       数组的前面的元素: 写上要注入到这个控制器中的服务的名称.
+       最后1个元素是1个回调,这个回调才是真正的控制器.回调写一个形参.
+       ng就会将需要注入的服务赋值给这个形参 所以在控制器内部 这个形参就代表注入的服务.
+
+       注入的服务的名称必须存在.
+       形参是可以任意的.
+
+       app.controller("demoCtrl",["$scope",function($scope){
+
+
+       }]);
+       可以一次性的注入多个服务来使用.那么回调的形参也需要指明多个. 
+       app.controller("demoCtrl",["$scope","$log",function($scope,$log){
+
+       }]);    
+       需要注意的是.是按照顺序注入的. 
+       
+
+
+    6. 推断式注入
+       在创建控制器的时候,不需要写数组.
+       而值直接写1个回调,回调的形参写上服务名称.
+       这个时候,ng就会注入形参的服务.
+
+        app.controller("demoCtrl",function($scope){
+           
+        });
+        根据形参的名字推断你需要注入这个服务.
+
+        使用推断式注入必须要保证形参的名称和服务的名称一致.
+       
+    7. 代码压缩混淆.
+
+       压缩的目的: 为了减小文件的体积 提高网络传输的效率 提升用户的体验.
+       混淆: 将长的标识符替换为短的标识符. 减少代码的体积.
+       var itcastStudentNumber = "itcast16888";
+       var o =  "itcast16888";
+       
+
+
+       
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">{{name}}</div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+        app.controller("demoCtrl",["$scope",function($scope){
+           $scope.name = "jack"
+        }]);
+        
+
+        // app.controller("demoCtrl",function(a){
+        //    a.name = "jack";
+        // });
+        
+
+    </script>
+</body>
+</html>

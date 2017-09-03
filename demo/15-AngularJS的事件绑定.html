@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 原生js的事件绑定.
+       缺点: 全局污染.
+    
+
+    2. AngularJS绑定事件.
+       绑定单击事件.
+       2.1 先为要绑定单击事件的元素设定一个指令ng-click
+           值是1个函数调用.
+       2.2 这个函数应该定义在$scope中.
+
+    3. 绑定其它事件的套路
+       3.1 首先是要指令的方式来绑定事件
+           这个指令叫什么名字.
+           原生事件的名字:onmousemove
+           指令就叫做: ng-mousemove
+
+           onmouseenter
+           ng-mouseenter
+
+           指令的名字: 将原生的事件名去掉前面的on换成ng-
+           然后指定调用1个函数.
+           这个函数定义在$scope中.
+    -->
+   <style>
+       .one{
+           width: 100px;    
+           height: 100px;
+           background-color:red;
+       }
+   </style>
+</head>
+<body ng-app="hmApp">
+   
+    <div ng-controller="demoCtrl">
+        <button ng-click="demo()">按钮</button>
+        <div class="one" ng-mouseenter="move()"></div>
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.demo = function(){
+                alert("hello...");
+            };
+            $scope.move = function(){
+                console.log("move......");
+            }
+        }]);
+    </script>
+</body>
+</html>

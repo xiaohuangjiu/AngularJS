@@ -1,0 +1,72 @@
+构建工具:当我们项目源代码写完 以后 我们一般情况下 会做一个项目的构建工作
+	 然后才会将这个项目上线
+	
+	 源代码-->项目的构建-->上线
+
+项目的构建:代码压缩和混淆
+	   代码当中的空格 换行 注释 对于浏览器是没有意义的
+	   反而还增加了文件的体积
+	   
+ 	   混淆:js代码 将长的标识符替换成端的标识符,减少代码体积 让代码不易读
+
+目前前端有很多多的项目构建工具
+	gulp 就是做这些事情的工具之一 使用比较广泛
+	grunt --> 历史比较悠久的 老牌工具
+	fis
+	webpack --> vue.js
+
+	重复造轮子
+	
+	github:logo --> 章鱼
+
+2.gulp安装:全局安装
+	npm install gulp -g   安装
+	gulp -v  查看版本号
+	还要本地安装 npm install gulp --save
+
+3.gulp的使用
+	首先在项目根目录中创建一个gulpfile.js文件
+	
+	在这个文件中写上项目构建的代码就可以了
+	
+	步骤:
+	  1).先将gulp工具引进来
+	     将gulp包导入
+	     返回的就是gulp对象
+	     var gulp = require("gulp);  
+	     
+	     var cssmin = require("gulp-cssmin") 	
+
+2.gulp是以任务的形式来做事情
+	通俗:你想要让gulp工具做事情,就必须要给gulp创建一个任务
+	gulp对象的task方法就是来创建一个任务的
+	参数1:任务的名字
+	参数2:是一个回调函数 这个回调函数就是这个任务要做的事情
+	
+gulp.task("testTask",function(){
+	console.log("我是testTask,我被执行了")
+});
+
+3.执行任务
+	用cmd命令 切换到gulpfile.js锁在的目录
+	输入一个名 gulp 任务名称
+	这时候 这个任务就会被执行了
+
+
+4.使用gulp来压缩css代码
+//gulp.src方法用来设置待处理文件的路径
+//gulp处理我呢件的方式 以 管道的形式来处理文件的
+	gulp.task("yscss",function(){
+		//写上压缩css的代码就可以了
+
+		//将指定的文件方法哦管道里面去,让其开始流
+		gulp.src();
+		//往管道里面设置关卡
+		//gulp.dest("./dist")只要经过这个关卡的文件就会被放到./dist
+		//往管道中放置一个压缩css的关卡
+		//gulp本身是不带这个关卡,需要自己下载这个插件
+		//压缩css关卡的名字叫做 gulp-cssmin 
+		.pipe(cssmin())
+		.pipe(gulp.dest("./dist"))
+	})
+

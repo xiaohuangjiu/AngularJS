@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 在AngularJS执行的过程中,有一个阶段叫做 配置运行.
+       ng允许我们这个阶段写代码执行.
+       可以对ng内置的服务做一些修改,进而影响后面的代码的执行.
+
+
+    2. 配置服务.
+       允许我们对AngularJS内置的服务做一些修改/调整
+
+       模块对象有一个方法叫做config.
+       参数: 只有1个,是1个数组.
+             数组的前面写上你要配置的服务所对应的Provider.
+             $log  $logProvider
+             最后元素写上1个回调函数,将这个Provider通过形参注入.
+
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        {{msg|firstBig}}
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+        app.config(["$logProvider",function($logProvider){
+            //让$log服务的debug方法失效.
+            $logProvider.debugEnabled(false);
+        }]);
+
+        app.config(["$filterProvider",function($filterProvider){
+            //新增1个过滤器.
+            $filterProvider.register("firstBig",function(){
+                return function(data){
+                    return data[0].toUpperCase()+data.slice(1);
+                }
+            });
+        }]);
+
+
+        app.controller("demoCtrl",["$scope","$log",function($scope,$log){
+            $log.debug("这是1条调试信息 ");
+            $log.error("ereror");
+
+            $scope.msg = "hello!";
+        }]);
+    </script>
+</body>
+</html>

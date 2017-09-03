@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 运行块.
+       我们之前学习了很多种服务.如果要使用这个服务的话.
+       就必须先创建控制器 关联视图 注入服务 才可以使用.
+
+    
+    2. 运行块
+       服务的使用脱离控制器视图
+       运行块的作用: 让服务脱离控制器视图使用.
+
+       模块对象有一个run方法.
+       功能: 直接使用服务.
+       参数: 数组
+             前面写上你要使用的服务的名称.
+             最后写上1个回调,将服务通过形参注入.
+             在回调中使用.
+
+
+       什么时候使用run方法:
+             如果你希望某个服务的使用脱离控制器视图
+     
+    3.注意.
+      $scope服务是不能脱离控制器视图的,所以它是不能在run方法中使用.
+
+
+    4. $rootScope服务.
+       存储在根作用域中的数据,在其他的任何作用域中都可以访问.
+       
+       
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        {{name}}
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+        app.run(["$log",function($log){
+            $log.error("我脱离了控制器和视图");
+        }]);
+
+        app.run(["$rootScope",function($rootScope){
+           $rootScope.name = "jack";
+        }]);
+
+        app.controller("demoCtrl",["$scope",function($scope){
+            
+        }]);
+    </script>
+</body>
+</html>

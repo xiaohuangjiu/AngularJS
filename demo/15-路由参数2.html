@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav {
+            overflow: hidden;
+        }
+
+        .nav li {
+            float: left;
+            margin-left: 18px;
+            list-style: none;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav li a:hover {
+            text-decoration: underline;
+        }
+
+        [ng-view] {
+            margin-left: 58px;
+        }
+    </style>
+    <script src="./lib/angular.min.js"></script>
+    <script src="./lib/angular-route.min.js"></script>
+    <!--
+     1. 路由的参数的第二种表现形式.
+
+
+     2. 在when方法中写路由匹配规则的时候.
+        "/my/:name"
+        什么样的路由可以与之匹配呢?
+        :name代表这个地方必须要有东西 是什么无所谓.
+
+
+     3. 在进行路由匹配的时候,比如
+        "/my/jack"
+        "/my/rose"
+        "/my/lily"
+        "/my/poly"
+        "/my/jim"
+        以上的路由都可以匹配这个规则  "/my/:name"
+        我们可以认为 jack rose lily poly jim 是传递到这个路由的参数.
+
+        那么这个参数我们可以在控制器拿到.
+
+        所以,这种传递参数的方式是第2种传递参数的方式.
+ 
+    4.  "list/:type" 这个规则的路由要求必须传type参数给我.
+        "list/:type?" 这个规则的路由要求type参数可以给也可以不给
+
+        如果你没有给路由的参数传值,那么取值得时候 取出来是undefined
+        如果你需要给默认值的话 就在控制器做1个判断就可以.
+
+    -->
+</head>
+
+<body ng-app="hmApp">
+
+    <ul class="nav">
+        <li><a href="#/home">首页</a></li>
+        <li><a href="#/my/jack">我的音乐</a></li>
+        <li><a href="#/find">发现音乐</a></li>
+    </ul>
+
+    <div ng-view></div>
+
+    <script>
+        var app = angular.module("hmApp", ["ngRoute"]);
+
+        app.config(["$locationProvider", function ($locationProvider) {
+            $locationProvider.hashPrefix("");
+        }]);
+
+        app.config(["$routeProvider", function ($routeProvider) {
+            $routeProvider.when("/home", {
+                templateUrl: "./music/home.html"
+                //       /my/:name
+                //       /my/aaa
+                //       /my/bbb
+                //        /my/cccdddaaa
+                //        /my/ddd
+                //        /my
+            }).when("/my/:name", {
+                templateUrl: "./music/my.html",
+                controller:"myCtrl"
+            }).when("/find", {
+                templateUrl: "./music/findNew.html"
+            }).when("/", {
+                redirectTo: "/home"
+            }).otherwise({
+                templateUrl: "./music/404.html"
+            });
+        }]);
+
+
+        app.controller("myCtrl",["$scope","$routeParams",function($scope,$routeParams){
+            console.log($routeParams);
+        }]);
+
+    </script>
+</body>
+
+</html>

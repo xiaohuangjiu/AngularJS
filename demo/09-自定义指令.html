@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. 如果你的自定义指令的名称是采用的驼峰命名法.
+       那么你在使用这个指令的时候.
+       hmTag
+       hm-tag
+
+    2. link函数
+       angularJS在解析元素的时候,如果发现这个元素有设定了指令.
+       就会执行这个指令对应的link函数.
+
+       这个函数有三个参数：
+       scope: 不管.
+       element: 代表被设定了指令的那个元素.
+       attrs: 这是1个对象,通过这个对可以拿到被设定了指令的元素的属性
+
+
+       
+    
+    -->
+    <style>
+        div div{
+            width: 100px;
+            height: 30px;
+            background-color: yellowgreen;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+
+        <div hm-tag="jack"></div>
+        <div hm-tag="rose"></div>
+        <div hm-tag="lily"></div>
+        <div hm-tag="hanmeimei"></div>
+        <div></div>
+        
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+        app.directive("hmTag",function(){
+            return {
+                restrict:"A",
+                link:function(scope,element,attrs){
+                    //element:代表被设定了指令的元素
+                    //attrs:可以拿到设定了指定的元素的属性.
+                    //只要谁设定了hmTag指令 就给谁自动的绑定1个点击事件.
+                    element.on("click",function(){
+                        alert("你好啊"+attrs.hmTag);
+                    });
+                }
+            };
+        });
+
+        app.controller("demoCtrl",["$scope",function($scope){
+            
+        }]);
+    </script>
+</body>
+</html>

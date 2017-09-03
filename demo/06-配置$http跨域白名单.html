@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 通过配置的方式来设定跨域白名单.
+    
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl"></div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+
+        app.config(["$sceDelegateProvider",function($sceDelegateProvider){
+            $sceDelegateProvider.resourceUrlWhitelist([
+                "https://api.asilu.com/weather/"
+            ]);
+        }]);
+
+        app.controller("demoCtrl", ["$scope", "$http", function ($scope,$http) {
+            $http({
+                url: "https://api.asilu.com/weather/",
+                params: { city: "深圳" },
+                method: "jsonp"
+            }).then(function (response) {
+                console.log(response.data);
+            });
+        }]);
+    </script>
+</body>
+
+</html>

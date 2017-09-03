@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. 内置指令 -- 自定义指令.
+       内置过滤器 -- 自定义过滤器.
+       内置的服务 -- 自定义服务.
+
+
+       服务: 就是一个功能模块. 每一个功能模块都有1个独立的功能.
+       $log
+       $timeout
+       $interval
+       $http
+
+
+    2. 自定义服务.
+       模块对象提供了一个叫做factory的方法.
+       功能: 自定义一个服务.
+       参数: 两个参数.
+             参数1: 服务的名称
+             参数2: 是1个数组.
+                    数组的前面写上自定义的服务要依赖的别的服务的名称.
+                    最后1个元素是1个回调函数,服务通过形参注入.
+                    这个回调函数在我们自定义服务被注入的时候调用.
+                    服务表示是1个功能模块,所以这个回调要求返回1个函数或者1个对象.
+
+                    在注入服务的控制器里面,服务就是这个回调所返回的东西.
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl"></div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+
+
+        // app.factory("heima",["$log",function($log){
+        //     return {
+        //         now:function(){
+        //             return new Date();
+        //         }
+        //     };
+        // }]);
+
+        app.factory("itcast", ["$filter", function ($filter) {
+            return {
+                now: function () {
+                    return $filter("date")(new Date(), "yyyy-MM-dd HH:mm:ss");
+                },
+                formart: function (formart) {
+                    return $filter("date")(new Date(), formart);
+                }
+            };
+        }]);
+
+
+        app.factory("heima", [function () {
+            return function () {
+                console.log("哈哈哈,大家好!");
+            }
+        }]);
+
+     
+
+        app.controller("demoCtrl", ["$scope", "itcast", "heima",function ($scope, itcast, heima) {
+            console.log(itcast.now());
+            console.log(itcast.formart("yy-M-d H:m:s"));
+            
+            heima();
+        }]);
+        
+    </script>
+</body>
+
+</html>

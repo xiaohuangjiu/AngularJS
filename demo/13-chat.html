@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #F7F7F7;
+		}
+
+		h3 {
+			text-align: center;
+		}
+
+		.chatbox {
+			width: 500px;
+			height: 500px;
+			margin: 0 auto;
+			border: 1px solid #CCC;
+			background-color: #FFF;
+			border-radius: 5px;
+		}
+
+		.messages {
+			height: 350px;
+			padding: 20px 40px;
+			box-sizing: border-box;
+			border-bottom: 1px solid #CCC;
+			overflow: scroll;
+		}
+
+		.messages h5 {
+			font-size: 20px;
+			margin: 10px 0;
+		}
+
+		.messages p {
+			font-size: 18px;
+			margin: 0;
+		}
+
+		.other {
+			text-align: left;
+		}
+
+		.self {
+			text-align: right;
+		}
+
+		.form {
+			height: 150px;
+		}
+
+		.form .input {
+			height: 110px;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		.form .btn {
+			height: 40px;
+			box-sizing: border-box;
+			border-top: 1px solid #CCC;
+		}
+
+		.form textarea {
+			display: block;
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			border: none;
+			resize: none;
+			outline: none;
+			font-size: 20px;
+		}
+
+		.form input {
+			display: block;
+			width: 100px;
+			height: 30px;
+			margin-top: 5px;
+			margin-right: 20px;
+			float: right;
+		}
+	</style>
+	<script src="./lib/angular.min.js"></script>
+</head>
+
+<body ng-app="chatApp">
+	<h3>正在和【温柔陷阱】聊天</h3>
+	<div class="chatbox" ng-controller="chatCtrl">
+		<!-- 聊天内容 -->
+		<div class="messages">
+			<div class="{{item.clsName}}" ng-repeat="item in messages">
+				<h5>{{item.who}}</h5>
+				<p>{{item.content}}</p>
+			</div>
+			<!--<div class="other">
+				<h5>对方说</h5>
+				<p>叔叔,我们不约,我们不约!</p>
+			</div>-->
+
+		</div>
+
+		<!-- 表单 -->
+		<div class="form">
+			<form ng-submit="send()">
+				<!-- 输入框 -->
+				<div class="input">
+					<textarea ng-model="msg"></textarea>
+				</div>
+				<!-- 按钮 -->
+				<div class="btn">
+					<input type="button" ng-click="send()" value="发送">
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		/*
+		1. 先分析数据.
+		   分析视图展示的是什么数据.
+		   是1条1条的消息.
+
+		   所以我们应该使用一个数组来保存这1条1条的消息
+
+		   每一个消息应该是1个对象.
+		   {id:1,content:"你好呀,小朋友!",who:"我说"}
+
+		   
+
+		*/
+		var app = angular.module("chatApp", []);
+		app.controller("chatCtrl", ["$scope", "$http", function ($scope, $http) {
+			$scope.messages = [
+				// { id: 1, content: "你好呀,小朋友!", who: "我说",clsName:"self" },
+				// { id: 2, content: "叔叔,我们不约会", who: "对方说",clsName:"other" },
+				// { id: 3, content: "没事的!", who: "我说",clsName:"self" },
+				// { id: 4, content: "哥屋恩!", who: "对方说" ,clsName:"other"}
+			];
+
+
+			$scope.send = function () {
+				//1.先获取用户输入的数据,组1个对象 加到数组中.
+				$scope.messages.push({
+					content: $scope.msg,
+					who: "我说",
+					clsName: "self"
+				});
+				$scope.msg = "";
+
+				//2.向服务器发起请求,接收对方的话.
+				$http({
+					url: "./php/chat.php"
+				}).then(function (response) {
+					$scope.messages.push({
+						content: response.data,
+						who: "对方说",
+						clsName: "other"
+					});
+				}).catch(function () {
+					console.log("error!");
+				});
+			}
+
+
+
+		}]);
+	</script>
+</body>
+
+</html>

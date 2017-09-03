@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. $http服务是支持跨域的.
+
+       但是,你需要设置1下跨域白名单.
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl"></div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+
+        app.config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+            // 设置白名单
+            $sceDelegateProvider.resourceUrlWhitelist(["https://api.asilu.com/weather/"]);
+        }])
+
+
+        app.controller("demoCtrl", ["$scope", "$http", function ($scope, $http) {
+            //https://api.asilu.com/weather/?city=%E6%B7%B1%E5%9C%B3&callback=angular.callbacks._0
+            $http({
+                url: "https://api.asilu.com/weather/",
+                params: { city: "深圳" },
+                method: "jsonp"
+            }).then(function (response) {
+                console.log(response.data);
+            }).catch(function () {
+                console.log("error");
+            });
+        }]);
+    </script>
+</body>
+
+</html>

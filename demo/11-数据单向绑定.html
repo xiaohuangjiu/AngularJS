@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 
+    1. 数据的单向绑定
+       在控制器中制造数据,将制造好的数据存储到数据模型$scope中.
+       在视图中使用{{}}来使用$scope中的数据.
+       这个过程,就叫做数据的单向绑定.
+
+    2. ng-bind指令.
+       {{}}这个符号其实是ng-bind指令的1个简写形式.
+       ng-bind指令的作用:将变量的值作为元素的innerText显示.
+
+       平时使用的过程中使用{{}}更方便一些.
+
+
+    3. 奇妙的闪烁.
+       为什么会有闪烁?
+       先是浏览器解析.浏览器解析的时候,会认为{{name}}就是p标签的文本 所以会原样显示.
+       然后ng介入,确定了name的值 然后替换.
+
+       解决方案: 
+       3.1 使用ng-bind
+       3.2 使用1个指令ng-cloak
+           原理: 生成1段CSS代码,先将其隐藏起来.
+                 等数据确定以后,再显示.
+       3.3 终极解决方案: 将angular的引入放在最前面.
+         
+       
+    
+    -->
+    <script src="./lib/angular.min.js"></script>
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <p>{{name}}</p>
+        <p>{{info}}</p>
+    </div>
+
+
+   
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl", ["$scope", function ($scope) {
+            $scope.name = "杰克";
+            $scope.info = "我在黑马学习前端开发!";
+        }]);
+    </script>
+</body>
+
+</html>

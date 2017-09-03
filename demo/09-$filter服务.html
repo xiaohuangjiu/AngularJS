@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. $filter服务.
+
+       早上讲的过滤器只能用在视图中的.
+       如果我希望在控制器中过滤一个数据 不显示 只是保存在某个变量中 用做它用.
+       这个时候就没有办法了.
+
+
+       $filter服务.它就是用在控制器中的过滤器.
+
+
+    2. $filter服务.
+       首先是1个函数。
+
+       var func =  $filter("传入过滤器名称");
+       会返回一个函数.这个函数就具备你传入的过滤器的功能
+       var res = func(待处理数据,其它参数..);
+       res就是被过滤以后的数据.
+
+       
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        {{num|number:2}}
+        {{now|date:""}}
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope","$filter",function($scope,$filter){
+        //    var date = $filter("date");
+        //    var res = date(new Date(),"yyyy-MM-dd HH:mm:ss");
+        //    console.log(res);
+
+            // $scope.price = 12.12;
+            // var currency = $filter("currency");
+            // var res = currency(12.12,"￥",1);
+            //  console.log(res);
+
+            var res =  $filter("number")(12.12,1);
+             console.log(res);
+        }]);
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TodoMVC</title>
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/app.css">
+	<script src="./lib/angular.min.js"></script>
+</head>
+
+<body ng-app="todosApp">
+	<section class="todoapp" ng-controller="todosCtrl">
+		<header class="header">
+			<h1>todos</h1>
+			<form ng-submit="add()">
+				<input class="new-todo" ng-model="name" placeholder="列出你要完成的事项" autofocus>
+			</form>
+		</header>
+		<section class="main">
+			<input class="toggle-all" type="checkbox">
+			<ul class="todo-list">
+				<!-- <li class="completed">
+					<div class="view">
+						<input class="toggle" type="checkbox" checked>
+						<label>和女票看场电影</label>
+						<button class="destroy"></button>
+					</div>
+					<input class="edit" value="Create a TodoMVC template">
+				</li> -->
+				<li ng-repeat="item in list" ng-class="{completed:item.isFinished}">
+					<div class="view">
+						<input class="toggle" type="checkbox" ng-click="toggle(item.id)">
+						<label>{{item.name}}</label>
+						<button class="destroy" ng-click="delete(item.id)"></button>
+					</div>
+					<input class="edit" value="Rule the web">
+				</li>
+			</ul>
+		</section>
+		<footer class="footer">
+			<span class="todo-count">还有<strong>{{left}}</strong>项未完成</span>
+			<button class="clear-completed">清除已完成</button>
+		</footer>
+	</section>
+
+
+
+	<script>
+		/*
+			1. 分析数据
+			   我们的app,显示的数据是1条1条的事情.
+			   应该用1个数组来保存这些事情.
+
+			   每一件事情:
+			     事情的名称
+				 事情是否完成
+				 {id:1, name:"买一只独角兽",isFinished:false}
+			*/
+		var app = angular.module("todosApp", []);
+		app.controller("todosCtrl", ["$scope", function ($scope) {
+			$scope.list = [];
+			$scope.id = 1;
+
+
+			$scope.add = function(){
+				 $scope.list.push({
+					 id:$scope.id++,
+					 name:$scope.name,
+					 isFinished:false
+				 });
+				 $scope.name = "";
+				 $scope.getLeft();
+			}
+
+
+			$scope.toggle = function(id){
+				//id代表被点击事情对象的id
+				for(var index in $scope.list){
+					if($scope.list[index].id == id){
+						$scope.list[index].isFinished = !($scope.list[index].isFinished);
+						break;
+					}
+				}
+				$scope.getLeft();
+			}
+
+
+			$scope.delete = function(id){
+				for(var index in $scope.list){
+					if($scope.list[index].id == id){
+						$scope.list.splice(index,1);
+						break;
+					}
+				}
+				$scope.getLeft();
+			}
+
+
+			$scope.getLeft = function(){
+				$scope.left = 0;
+				for(var index in $scope.list){
+					if($scope.list[index].isFinished == false){
+						$scope.left++;
+					}
+				}
+			}
+
+
+		}]);
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. 全局对象angular有1个方法叫做element
+       作用: 可以将1个原生的dom对象转换为1个"jq"对象.
+
+       如果页面上有引入jQuery，那么这个方法返回的就是1个完整的jq对象.
+       如果页面上没有引入jQuery，那么这个方法返回的就是1个jqLite对象.
+       jqLite对象包含了jQuery的一些常用方法.
+    
+    -->
+    <style>
+        .one{
+            width: 20px;
+            height: 20px;
+            background-color: #0094ff;
+        }
+    </style>
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+
+        <div id="test" class="one"></div>
+
+    </div>
+
+    <script>
+        var test = angular.element(document.getElementById("test"));
+        test.animate({width:200,height:200},1000);
+
+
+
+
+        var app = angular.module("hmApp",[]);
+
+
+        app.controller("demoCtrl",["$scope",function($scope){
+                
+
+
+
+        }]);
+    </script>
+</body>
+</html>

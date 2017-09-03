@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. 如果你认为 ng 提供的指令
+       功能不够强大
+       没有现成的指令来实现我们自己的功能.
+
+    2. 模块对象提供了一个方法. directive
+       功能: 允许我们自定义指令.
+       参数: 参数1:自定义指令的名称.
+            参数2:是1个回调函数.
+                   这个回调函数在解析指令的时候被执行.
+                 这个回调函数要求返回1个对象 通过这个对象的键值对来指定这个自定义指令要做的事情.
+                 restrict: 代表自定义指令的类型.
+                           E: Element html标签.
+                           A: Attribute 属性.
+                           C: 类名
+                           M: 注释
+                 template: 模板字符串,会将其作为html元素追加到设定自定义指令的标签下面.
+                 replace: boolean值.决定是否替换原有标签.
+                 templateUrl:将1个外部文件的内容包含到设定了自定义标签的元素下.
+                           
+
+          
+
+
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <tag></tag>
+        <div tag></div>
+         
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+
+        app.directive("tag",function(){
+             return {
+                restrict:"EA",
+                //template: "<h1>传智播客</h1>",
+                replace:false,
+                templateUrl:"./inlcude演示/top.html"
+             };
+        });
+
+
+
+
+
+        app.controller("demoCtrl",["$scope",function($scope){
+            
+        }]);
+    </script>
+</body>
+</html>

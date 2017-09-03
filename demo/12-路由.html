@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav {
+            overflow: hidden;
+        }
+
+        .nav li {
+            float: left;
+            margin-left: 18px;
+            list-style: none;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav li a:hover {
+            text-decoration: underline;
+        }
+
+        [ng-view] {
+            margin-left: 58px;
+        }
+    </style>
+    <script src="./lib/angular.min.js"></script>
+    <script src="./lib/angular-route.min.js"></script>
+    <!--
+    1. when方法第2个参数对象的键值对说明
+      
+       1.1 templateUrl 当路由匹配成功以后,要请求的资源的路径.
+                       并将请求回来的资源放在ng-view下面.
+
+       1.2 template:"" 这个是字符串. 会直接将这个字符串作为ng-view的子元素.
+
+
+       1.3 redirectTo: "" 跳转路由.
+                          跳转到另外1个路由.
+                          当路由匹配成功以后 让它跳转到另外一个路由上去.
+
+       1.4 controller:"" 给一个控制器的名字.
+                         就会将请求回来的视图和这个控制器相关联.
+
+       
+
+    2. 为什么AngularJS的锚链接要以#!开头.
+
+       SPA的优点: 用户体验好.
+       SPA的缺点: SEO 搜索引擎不太会收录spa网站.
+                 我们的spa的页面上没有什么实际的内容.
+                 所以,搜索引擎爬到这个页面的时候,发现不了有什么实际的数据的.
+
+       Google搜索引擎:#!开头的锚链接 会认为这是1个spa 会追进去爬信息
+
+
+    3. 自定义锚链接的前置符号.
+
+       app.config(["$locationProvider",function($locationProvider){
+            $locationProvider.hashPrefix("");//给一个空串代表去掉前置符号直接以#开头.
+       }]);
+
+
+    4. 锚链接的值
+       #/home  
+       如果你不写/
+       会自动的帮你加上/
+       所以你最好还是写上.
+       
+       
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+
+    <ul class="nav">
+        <li><a href="#/home">首页</a></li>
+        <li><a href="#/my">我的音乐</a></li>
+        <li><a href="#/find">发现音乐</a></li>
+    </ul>
+
+    <div ng-view></div>
+
+    <script>
+        var app = angular.module("hmApp", ["ngRoute"]);
+
+        app.config(["$locationProvider",function($locationProvider){
+            $locationProvider.hashPrefix("");
+        }]);
+
+        app.config(["$routeProvider", function ($routeProvider) {
+            $routeProvider.when("/home", {
+                templateUrl: "./music/home.html"
+                //template: "<h1>我是首页</h1>"
+            }).when("/my", {
+                templateUrl: "./music/my.html"
+            }).when("/find", {
+                templateUrl: "./music/findNew.html",
+                controller: "demoCtrl"
+            }).when("/", {
+                //templateUrl: "./music/home.html"
+                redirectTo: "/home"
+            }).otherwise({
+                templateUrl: "./music/404.html"
+            });
+        }]);
+
+
+        app.controller("demoCtrl", ["$scope", function ($scope) {
+            $scope.songs = [
+                { name: "不要再来伤害我1", singer: "晓明1" },
+                { name: "不要再来伤害我2", singer: "晓明2" },
+                { name: "不要再来伤害我3", singer: "晓明3" },
+                { name: "不要再来伤害我4", singer: "晓明4" },
+                { name: "不要再来伤害我5", singer: "晓明5" },
+                { name: "不要再来伤害我6", singer: "晓明6" },
+                { name: "不要再来伤害我7", singer: "晓明7" },
+                { name: "不要再来伤害我8", singer: "晓明8" },
+                { name: "不要再来伤害我9", singer: "晓明9" }
+            ];
+        }]);
+    </script>
+</body>
+
+</html>

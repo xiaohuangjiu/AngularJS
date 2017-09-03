@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav {
+            overflow: hidden;
+        }
+
+        .nav li {
+            float: left;
+            margin-left: 18px;
+            list-style: none;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav li a:hover {
+            text-decoration: underline;
+        }
+
+        [ng-view] {
+            margin-left: 58px;
+        }
+    </style>
+    <script src="./lib/angular.min.js"></script>
+    <script src="./lib/angular-route.min.js"></script>
+    <!-- 
+    1. AngularJS的主要应用场景: 就是来做SPA.
+
+    2. 单页面应用的原理:
+       通过锚链接来实现功能的切换.
+       hashchange事件监听到锚点的变化，
+       进而可以实现为不同的锚点显示不同的视图，
+       单页面应用就是基于这一原理实现的。
+
+    3. AngularJS就将这个原理封装为路由.
+       angularJS 1.2版本之前,路由的功能就直接在angularjs的核心代码中.
+       从1.2开始,路由功能就单独以插件的形式存在.
+
+    4. 路由的使用
+       4.1 下载Angular-route插件.
+       4.2 引包.
+       4.3 在创建模块的时候,由于我们现在要使用到路由的功能.
+           所以必须要依赖于"ngRoute"模块.
+
+       4.4 需要对路由进行配置.
+           配置的目的是: 处理当锚点值发生变化以后应该怎么做.
+           当锚点值发生变化以后,要做什么事情呢?
+           这些都是通过路由的配置来决定的.
+
+           AngularJS中的实现路由的锚链接默认必须要以#!开头
+           index.html#home
+           锚链接 哈希值 路由.
+
+           对$routeProvider进行配置.
+           它有一个方法叫做when方法,这个方法就是来匹配处理路由的.
+           参数1:是要匹配的路由.
+           参数2:是1个对象,当路由成功匹配以后,要做的事情,通过这个对象的键值对来指定.
+                 这个对象的键值对介绍
+                 templateUrl:""  当路由成功匹配以后,就会去请求这个路径的资源
+                                 请求下来以后放在ng-view这个指令的下面.
+            
+            它还有一个方法叫做otherwise。
+            这个方法表示当所有的路由都不匹配的时候 就来这里.
+
+
+            "/" 表示空路由.
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+
+    <ul class="nav">
+        <li><a href="#!/home">首页</a> </li>
+        <li><a href="#!/my">我的音乐</a> </li>
+        <li><a href="#!/find">发现音乐</a> </li>
+    </ul>
+
+    <div ng-view></div>
+
+    <script>
+        var app = angular.module("hmApp", ["ngRoute"]);
+
+        app.config(["$routeProvider", function ($routeProvider) {
+            //$routeProvide中就提供了一些方法来对路由进行配置.
+            //第1个参数:是要匹配的路由.
+            //第2个参数:是1个对象,当路由成功匹配以后,要做的事情,
+            //         通过这个对象的键值对来指定.
+            // 注意:第1个参数是需要匹配的路由,不需要写前面的#!
+            $routeProvider.when("/home", {//当路由为/home的时候
+                templateUrl: "./music/home.html"
+            }).when("/my", {//当路由为/my的时候
+                templateUrl: "./music/my.html"
+            }).when("/find", {//当路由为/find的时候
+                templateUrl: "./music/find.html"
+            }).when("/", {//当路由为空的时候
+                templateUrl: "./music/home.html"
+            }).otherwise({//当当前的路由和上面的所有的when都不匹配的时候
+                templateUrl: "./music/404.html"
+            });
+        }]);
+    </script>
+</body>
+
+</html>

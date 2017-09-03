@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 过滤器.
+       对数据进行各种处理.
+       我们现在讲的过滤器,是用在视图中的.
+       在视图显示数据的时候,调用1个过滤器,处理本来要显示的数据 然后再显示.
+
+       语法:
+       {{name|过滤器的名称:参数1:参数2...}}
+    
+
+    2. currency 货币过滤器.
+       {{price|currency}} 默认会在前面加1个$符号.
+       {{price|currency:"￥"}} 自定义前面显示的货币符号.
+       {{price|currency:"￥":1}} 指定保留的小数位数.
+
+
+    3. date 日期过滤器.
+       {{now|date}} 默认会按照美国的日期格式显示.
+       {{now|date:"yyyy-MM-dd HH:mm:ss"}} 自定义日期格式.
+       y: year 年份 2位或者4位.
+       M: moth 月
+       d: Day
+       H: 24小时制的小时
+       h: 12小时制的小时
+       m: 分
+       s: 秒
+
+       分隔符可以自定义.
+
+    4. 转换为大写/小写的过滤器
+       uppercase 转换为大写
+       lowercase 转换为小写.
+
+    5. limitTo过滤器
+       截取数组中指定位数的元素.
+
+       {{arr|limitTo:n}}
+       如果n为正数就显示数组前面的n位.
+       如果n为负数就显示数组后面的n位.
+
+       {{arr|limitTo:3:5}} 显示3位元素 从下标为5的元素开始.
+    
+    6. number过滤器.
+       作用: 控制小数的位数.
+
+       {{num|number:2}} 将num保留两位小数输出.
+
+
+    7. json过滤器.
+      {{person|json}} 将person对象转换为json字符串显示.
+
+      在我们绑定显示1个对象的时候,其实ng会自动调用json过滤器.
+
+
+    8. orderBy过滤器
+       对数组进行排序显示.
+
+       {{stus|orderBy:"age"}} 对stus数组中的对象进行排序
+                              并且制定参照属性为age
+                              默认是升序.
+
+       {{stus|orderBy:"age":true}} 进行降序排序.
+
+
+       {{arr|orderBy}} 当arr是1个基本数据类型的数组的时候 这样排序就可以.
+                       默认是升序.
+
+       {{arr|orderBy:null:true}} 制定基本数据类型的数组按照降序排序.
+
+
+
+    9. filter过滤器.
+       从1个数组中挑选符合条件的元素.
+       {{stus|filter:{age:18} }} 从stus数组种挑选出age为18的对象.
+
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <ul>
+            <li>价格:{{price|currency:"￥":1}}</li>
+            <li>{{now|date:"yyyy年M月dd号 HH点mm分ss秒"}}</li>
+            <li>{{msg1|uppercase}}</li>
+            <li>{{msg2|lowercase}}</li>
+            <li>{{arr|limitTo:-2:5}}</li>
+            <li>{{num|number:2}}</li>
+            <li>{{person}}</li>
+            <li>{{stus|orderBy:"age":true}}</li>
+            <li>{{arr|orderBy:null:true}}</li>
+            <li>{{stus|filter:{age:18} }}</li>
+        </ul>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl", ["$scope", function ($scope) {
+            $scope.price = 12.34;
+            $scope.now = new Date;
+            $scope.msg1 = "i love you";
+            $scope.msg2 = "ITCAST!";
+            $scope.arr = [45,10, 20, 30,41, 40, 50, 60, 456,70, 80, 90, 100];
+            $scope.num = 12.345;
+            $scope.person = {
+                id: 1,
+                name: "Jack",
+                age: 18
+            };
+            $scope.stus = [
+                { id: 1, name: '小明', gender: '男', age: 18 },
+                { id: 2, name: '小花', gender: '女', age: 16 },
+                { id: 3, name: '小强', gender: '男', age: 14 },
+                { id: 4, name: '小东', gender: '男', age: 19 },
+                { id: 5, name: '小常', gender: '女', age: 20 }
+            ];
+        }]);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. $scope服务.
+       功能:存储数据 充当数据模型 可以在控制器和相关联的视图中访问.
+
+       ng内置的服务,要么是1个对象,要么是1个函数.
+       大多数是函数.
+
+    2. $log服务.
+       它是1个对象.
+       功能： 提供个性化的控制台输出.
+
+       输出的消息分级别,chorme浏览器默认不显示debug级别的消息.
+
+    3. 
+
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl"></div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+
+        
+
+        app.controller("demoCtrl", ["$scope", "$log", function ($scope, $log) {
+         
+            $log.error("这是error输出的信息");//错误的格式
+            $log.debug("这是debug输出的信息");//和console.log()视觉效果一致
+            $log.info("这是info输出的信息");//和console.log()视觉效果一致
+            $log.log("这是log输出的信息");//和console.log()视觉效果一致
+            $log.warn("这是warn输出的信息");//警告的格式
+        }]);
+    </script>
+</body>
+
+</html>

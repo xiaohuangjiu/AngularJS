@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. ng-repeat指令
+       功能: 重复生成指定的标签.
+             遍历数组.
+    
+    2. 可以遍历数组
+
+    3. 也可以遍历对象.
+       "item in person"
+       item代表person对象的每一个属性的值.
+
+       如果你希望拿到对象的属性名和属性值.
+       "(key,value) in person"
+
+       如果数组也这么遍历 那么key就是索引.
+
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <ul>
+            <li ng-repeat="(key,value) in arr">{{key}}={{value}}</li>
+        </ul>
+        <hr>
+        <ul>
+            <li ng-repeat="(key,value) in person">{{key}}=={{value}}</li>
+        </ul>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.arr =[10,20,30,40,50,60,70,80,90,100];
+            $scope.person = {
+                name:"打瞌睡的小男孩",
+                age:21,
+                height:175
+            };
+        }]);
+    </script>
+</body>
+</html>

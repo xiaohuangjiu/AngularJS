@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. 控制器制造数据,将制造好的数据存储在数据模型$scope中.
+       那么这个$scope中的数据只可以在与这个控制器相关联的视图中访问.
+    
+    2. 控制器/视图在一个页面中可以有多组.
+
+
+    3. 相互独立的视图/控制器, 他们的$scope也是相互独立的.
+
+
+    4. 视图是可以相互嵌套的.
+       子视图中可以访问父视图的$scope中的数据.
+       作用域:
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl1">
+        {{name}}
+        <div ng-controller="demoCtrl2">
+            {{age}}
+            {{name}}
+        </div>
+    </div>
+
+
+
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl1", ["$scope", function ($scope) {
+            $scope.name = "jack";
+        }]);
+
+        app.controller("demoCtrl2", ["$scope", function ($scope) {
+            $scope.age = 10;
+        }]);
+    </script>
+</body>
+
+</html>

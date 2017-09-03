@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav {
+            overflow: hidden;
+        }
+
+        .nav li {
+            float: left;
+            margin-left: 18px;
+            list-style: none;
+        }
+
+        .nav li a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .nav li a:hover {
+            text-decoration: underline;
+        }
+
+        [ng-view] {
+            margin-left: 58px;
+        }
+    </style>
+    <script src="./lib/angular.min.js"></script>
+    <script src="./lib/angular-route.min.js"></script>
+    <!--
+     1. 路由的参数.
+
+        路由的后面可以带querystring格式的参数.
+        如果路由的后面带了参数,是不影响路由的匹配的.
+        
+     2. querystring类型的参数对路由的匹配没有影响。
+        "#/my?name=jack&age=18" 这个路由仍然可以成功匹配 "/my"
+        参数是不会被发送到服务器的.
+        因为我们点击的是锚链接.
+
+
+        虽然这个参数是不会被主动发送到服务器的.
+        但是这个参数我们可以在与请求回来的视图相关联的控制器中拿到的.
+
+
+    3. 在视图被加载以后.
+       在与这个视图相关联的控制器中可以拿到地址栏上url中的参数.
+       通过$routeParams服务拿到.
+
+    
+    -->
+</head>
+
+<body ng-app="hmApp">
+
+    <ul class="nav">
+        <li><a href="#/home">首页</a></li>
+        <li><a href="#/my?name=jack&age=18">我的音乐</a></li>
+        <li><a href="#/find">发现音乐</a></li>
+    </ul>
+
+    <div ng-view></div>
+
+    <script>
+        var app = angular.module("hmApp", ["ngRoute"]);
+
+        app.config(["$locationProvider",function($locationProvider){
+            $locationProvider.hashPrefix("");
+        }]);
+
+        app.config(["$routeProvider", function ($routeProvider) {
+            $routeProvider.when("/home", {
+                templateUrl: "./music/home.html"
+            }).when("/my", {
+                templateUrl: "./music/my.html",
+                controller:"myCtrl"
+            }).when("/find", {
+                templateUrl: "./music/findNew.html"
+            }).when("/", {
+                redirectTo: "/home"
+            }).otherwise({
+                templateUrl: "./music/404.html"
+            });
+        }]);
+
+
+        app.controller("myCtrl", ["$scope","$routeParams",function ($scope,$routeParams) {
+            console.log($routeParams.name);
+            console.log($routeParams.age);
+            
+        }]);
+    </script>
+</body>
+
+</html>

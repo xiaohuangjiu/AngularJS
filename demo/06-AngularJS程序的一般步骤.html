@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--
+    1. ng-repeat指令.
+       值: "item in 数组"
+       作用: 重复生成标签. 数组有多少个元素就生成多少个标签.
+             item就是遍历出来的每一个元素.
+
+    
+
+
+    -->
+    <script src="./lib/angular.min.js"></script>
+</head>
+
+<body ng-app="hmApp">
+
+    <div ng-controller="demoCtrl">
+        <table>
+            <caption>学员清单</caption>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+            </tr>
+            <tr ng-repeat="item in stus">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.age}}</td>
+            </tr>
+            
+        </table>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl", ["$scope", function ($scope) {
+            $scope.stus = [
+                { id: 1, name: '小明', gender: '男', age: 18 },
+                { id: 2, name: '小花', gender: '女', age: 16 },
+                { id: 3, name: '小强', gender: '男', age: 14 },
+                { id: 4, name: '小东', gender: '男', age: 19 },
+                { id: 5, name: '小常', gender: '女', age: 20 }
+            ];
+        }]);
+    </script>
+</body>
+
+</html>

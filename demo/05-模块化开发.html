@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 
+    1. AngularJS应用是以模块化的方式构建的.
+----------------------------------
+    1. 下载ng包
+       2.1 官方网站
+       2.2 npm
+       2.3 bower
+
+    2. 引包
+
+    3. 使用一个ng指令ng-app指定angularJS管理的范围.
+       指令一般指的是: ng自定义的html属性.
+
+       ng-app的作用: 指定ng管理的范围.
+       一般情况下 我们将body标签及其子标签交给ng管理.
+
+       为ng-app赋值.这个值可以任意.
+
+    4. 我们使用ng-app指定了ng管理的范围
+       ng是以模块的形式来管理这个标签范围的.
+       接下来你要创建1个模块来管理ng-app指定的范围.
+
+       当我们引入了ng的包以后,会向全局暴露1个angular全局对象.
+       这个全局对象有个方法叫做module
+       作用: 这个方法就用来创建模块的
+       参数: 参数1: 创建的模块的名称 这个模块的名称必须要和ng-app的值一致. 否则创建出来的模块无法管理ng-app
+             参数2: 是1个数组.如果创建出来的模块要依赖于别的模块 就将依赖的模块的名称写在里面.
+                             如果没有依赖 就1个空数组.
+       返回值：返回创建出来的模块对象.
+
+    5. 创建MVC角色.
+       5.1 创建控制器.
+           模块对象有1个方法叫做controller.
+           功能:  创建控制器
+           参数:  参数1: 控制器的名称  名称随意.
+                  参数2: 是1个数组
+                         前面的元素写上要注入的服务的名称.
+                         最后1个元素是1个回调函数.
+                         今天照写.
+                         app.controller("demoCtrl",["$scope",function($scope){
+ 
+                        }]);
+        
+
+       5.2 创建视图.
+           使用ng-controller指令 将视图和控制器关联起来.
+           将ng-controller的值设置为控制器的名称 那么这个视图就和这个控制器关联起来了.
+           
+ 
+        
+       5.3 数据模型.
+           $scope就是数据模型.
+           $scope很特殊.
+           > 它是1个对象.
+           > $scope可以在控制器中访问.
+           > $scope还可以在与这个控制器相关联的视图中访问.
+
+
+           控制器负责制造数据,将制造好的数据数据存储到数据模型($scope)中.
+           在视图中使用数据绑定符号{{}}来显示控制器存储到$scope中的数据.
+
+           访问方式不一样
+           控制器: $scope.xxx = "";
+           视图: {{xxx}}
+
+    -----使用ng开发程序的步骤---
+    1. 引包
+    2. ng-app指定ng管理的范围
+    3. 创建模块
+    4. 创建控制器
+    5. 指定与控制器相关联的视图
+    6. 控制器制造数据 存储到 $scope中.
+       视图显示$scope中的数据.
+    -->
+    <script src="./lib/angular.min.js"></script>
+</head>
+<body ng-app="hmApp">
+
+    <div ng-controller="demoCtrl">
+        <p>{{name}}</p>
+        <p>{{info}}</p>
+    </div>
+
+    <script>
+        //调用全局对象angular的module方法来创建1个模块.
+        var app =  angular.module("hmApp",[]);
+        //创建控制器.
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.name = "jack";
+            $scope.info = "我在黑马跟着老王学习前端开发";
+        }]);
+
+    </script>
+</body>
+</html>

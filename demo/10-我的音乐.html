@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .nav{
+            overflow: hidden;
+        }
+        .nav li{
+            float: left;
+            margin-left: 18px;
+            list-style: none;
+        }
+        .nav li a{
+            text-decoration: none;
+            font-size: 14px;
+            color: #333;
+        }
+         .nav li a:hover{
+             text-decoration: underline;
+         }
+    </style>
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="#home">首页</a> </li>
+        <li><a href="#my">我的音乐</a> </li>
+        <li><a href="#find">发现音乐</a> </li>
+    </ul>
+    <div id="content"></div>
+    <script>
+        //这个事件在url地址栏的锚点值发生变化的时候就会被触发.
+        window.onhashchange =function(){
+            //1.拿到当前新的锚点值.
+            var hash =location.hash.slice(1); //home
+            //2.确认请求的url路径
+            var url = "./music/"+hash+".html"; //  ./muhsci/hone.html
+            //3. 发起ajax请求
+            var xhr = new XMLHttpRequest();
+            xhr.open("get",url);
+            
+            xhr.onreadystatechange =function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                  document.getElementById("content").innerHTML = xhr.responseText;
+                }
+            };
+
+            xhr.send();
+           
+        }
+    </script>
+</body>
+</html>

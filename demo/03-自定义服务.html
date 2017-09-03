@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 调用模块对象的service方法来自定义一个服务.
+
+        参数1: 自定义服务的名称.
+        参数2: 数1个数组,前面是要依赖的服务的名称 后面是1个回调.
+
+
+
+        factory方法要求返回1个对象或者1个函数.
+        service方法不需要我们手动的返回对象.
+        只需使用this关键字来创建对象.
+        会将这个对象自动的返回.
+
+
+    2. servce定义服务和factory定义服务的异同.
+       相同: 都是自定义服务.
+       不同点: 
+           > factory既可以返回1个对象也可以返回1个函数.
+           > service定义的服务只能是1个对象.
+
+           > factory必须要手动的返回对象或者函数.
+           > service只需要使用this定义函数的属性，不需要手动返回.
+                    自动返回这个this对象.
+       
+    3. AngularJS关于封装的规范
+       如果我们希望封装1个功能,建议我们将这个功能封装为一个服务. 
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+
+
+    </div>
+
+    <script>
+        
+        
+        var app = angular.module("hmApp",[]);
+
+
+        app.service("heima",["$filter",function($filter){
+                this.now =function(){
+                    return $filter("date")(new Date(),"yyyy-MM-dd HH:mm:ss");
+                };
+                this.formart = function(formart){
+                    return $filter("date")(new Date(),formart);
+                }
+        }]);
+
+        app.controller("demoCtrl",["$scope","heima",function($scope,heima){
+            console.log(heima);
+        }]);
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. ng-switch指令.
+       和原生的switch-case差不太多.
+
+       作用: 判断1个变量的值. 进行匹配. 只要被匹配到的元素才会被创建.
+
+    2. 其原理
+       把switch的值和每一个when进行匹配.匹配到的元素会被创建.
+       匹配不到的元素不会被创建.
+       所有的when都无法匹配是1 就会创建default
+
+       
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <ul ng-switch="lesson">
+            <li ng-switch-when="html">html</li>
+            <li ng-switch-when="css">css</li>
+            <li ng-switch-when="js">js</li>
+            <li ng-switch-when="java">java</li>
+            <li ng-switch-when="C#">C#</li>
+            <li ng-switch-default>没有课程</li>
+        </ul>
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.lesson = "java";
+        }]);
+    </script>
+</body>
+</html>

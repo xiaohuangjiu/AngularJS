@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. $timeout服务.
+       是1个函数.
+       功能: 在指定的时间之后做指定的事情.
+
+       $timeout(fn,time);
+
+
+    2. 停止计时器.
+       $timeout()返回1个计时器的id
+       $timeout.cancel(计时器id) 就可以将这个计时器停止.
+       
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        {{name}}  <button ng-click="stop()">停止</button>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope","$timeout",function($scope,$timeout){
+            $scope.name = "rose";
+            
+            var id = $timeout(function(){
+                $scope.name = "jack";
+            },3000);
+
+            $scope.stop =function(){
+                $timeout.cancel(id);
+            }
+
+
+
+        }]);
+    </script>
+</body>
+</html>

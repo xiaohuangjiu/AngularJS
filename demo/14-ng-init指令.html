@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!-- 
+    1. ng-init指令.
+       作用: 声明并初始化变量.
+
+       只适合初始化一些简单的、固定的数据。
+       对于一些复杂的数据的初始化是不合适的.
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl" ng-init="age=18">
+        {{name}} <br>
+        {{age}}
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.name =  "jack";
+            $scope.stus = [
+                { id: 1, name: '小明', gender: '男', age: 18 },
+                { id: 2, name: '小花', gender: '女', age: 16 },
+                { id: 3, name: '小强', gender: '男', age: 14 },
+                { id: 4, name: '小东', gender: '男', age: 19 },
+                { id: 5, name: '小常', gender: '女', age: 20 }
+            ];
+        }]);
+    </script>
+</body>
+</html>

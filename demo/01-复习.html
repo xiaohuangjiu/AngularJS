@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--
+    1. MVC设计模式
+       将代码按照功能分为三部分.
+       M Model 数据模型 存储展示的数据 $scope
+       V View 视图 界面 和用户进行交互 html代码.
+       C Controller 控制器 制造数据将制造好的数据放在$scope数据模型中.
+                           视图使用{{}}来显示数据模型中的数据.
+
+    2. AngularJS程序的开发步骤
+       2.1 引包
+       2.2 ng-app
+       2.3 创建模块
+       2.4 创建控制器
+       2.5 指定与控制器相关联的视图
+       2.6 控制器中制造数据放在$scope数据模型中.
+           视图使用{{}}来显示数据模型中的数据.
+
+    3. 指令
+       ng-app
+       ng-controller
+       ng-show/ng-hide
+       ng-if
+       ng-class
+       ng-src
+       ng-repeat
+       ng-switch       
+       ng-model
+
+
+    4. 双向数据绑定.
+       ng-model指令.
+       4.1 只能在表单元素身上使用这个指令.
+
+       4.2 ng-model的作用用来声明1个变量.
+           这个变量的值随着表单元素的值得变化而变化.
+           表单元素的值随着变量的值得变化而变化.
+       
+    5. AngularJS程序.
+       只需向把精力集中在数据的处理上.
+       数据一旦发生变化 视图就会跟着刷新.
+
+    -->
+    <script src="./lib/angular.min.js"></script>
+</head>
+
+<body ng-app="hmApp">
+
+    <div ng-controller="demoCtrl">
+
+        用户名: <input type="text" ng-model="userName"> <br>
+        密码: <input type="password" ng-model="pwd"> <br>
+        <button ng-click="login()">登录</button>
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl", ["$scope", function ($scope) {
+            $scope.login =function(){
+                console.log($scope.userName);
+                 console.log($scope.pwd);
+            }
+        }]);
+    </script>
+</body>
+
+</html>

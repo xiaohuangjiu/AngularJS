@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 
+    1. AngularJS认为HTML简单.
+       所以,ng对html进行了扩展
+       ng新增了一些html标签和属性 来实现更加强大的功能.
+
+       ng指令 大多数情况下是 ng新增的html属性.
+       angularJS提供的指令都是以ng-开头.
+
+    2. ng-app 指定angularJS管理的范围.
+       ng-controller: 将视图和控制器进行关联
+       ng-repeat: 重复生成指定的标签.
+
+    3. ng-show指令.
+       功能: 决定1个元素是否显示.
+       取值: boolean值
+             true: 这个元素就会被显示
+             false: 这个元素就不会被显示.
+
+       无论是否显示,该元素都是存在于DOM树上的.
+
+       取值:可以直接是1个boolean值. 可以直接给1个true或者false。
+            还可以给一个变量.
+            还可以是1个表达式.
+
+    3. ng-hide指令
+       作用:决定1个元素是否隐藏.
+       取值: boolean值 变量 表达式.
+            true:隐藏  false:不隐藏
+
+
+    4. ng-if指令.
+       作用: 决定1个元素是否被创建出来.
+       取值：boolean值 变量 表达式.
+            true:该元素就会被创建在DOM树上
+            false:该元素就不会被创建在DOM树上
+
+       ng-show/ng-hide 无论如何元素都是被创建在DOM树上的.
+       ng-if：只有为true的时候才会被创建在树上.false是不会被创建出来的.
+
+    5. ng-src指令
+       作用: 增强的路径指令.
+
+
+    6. ng-href指令.
+       作用: 增强的链接指令.
+
+    7. ng-class指令.
+       作用: 决定一个类样式是否作用在指定的元素身上.
+       取值: 是1个对象.
+             键: 是类样式名称.
+             值: boolean值 true false
+                 这个值同样的可以是boolean值 变量 表达式.
+   
+    8. ng-include指令.
+       作用: 将另外的单独的文件中的内容包含到指定的标签下面.
+       注意: 路径本身还需要使用单引号引起来
+             ng-include="'top.html'"
+
+             其原理是发送ajax请求文件包含内容。
+             所以你需要以服务器的方式打开这个页面.
+
+    9. ng-disable指令.
+     
+       原生的disable属性容易让人引起误会 有歧义.
+       ng-disable指令 的取值是bool值
+       true 禁用
+       false 不禁用
+       这样的话 代码的可读性就变得很高了.
+
+
+       ng-readonly
+       ng-checked
+       ng-selected
+
+
+   10.关于指令的补充.
+      > 自定义指令的本质是1个html属性.
+        根据html规范,属性的值都需要用双引号引起来.
+        所以,指令的值无论如何都需要按照html规范使用双引号引起来.
+
+      > 你需要在视图中显示数据的地方是html原生的地方.这个时候必须使用{{}}
+
+      > 如果使用变量的地方是属于angularJS的部分，
+        那么这个时候绝大多数情况下,直接使用变量 不要加{{}}
+        ng-src 的值还是需要加{{}}.
+
+        ng的指令的属性的值除了ng-src,直接使用.
+        其它的html原生的地方如果要使用$scope中的数据 需要{{}}
+    -->
+    <script src="./lib/angular.min.js"></script>
+    <style>
+        .one{
+            width: 100px;
+            height: 100px;
+            background-color: hotpink;
+        }
+        .border{
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body ng-app="hmApp">
+    
+    <div ng-controller="demoCtrl">
+
+        <div class="one" ng-if="flag"></div>
+        <!-- 当浏览器解析到这里的时候.这个时候AngularJS还没有介入
+             path的值还没有确定.
+             这个时候浏览器会认为图片的路径:{{path}}
+             localhost/{{path}}
+       
+        <img ng-src="{{path}}" alt="">
+        <p>{{msg}}</p>
+        <br>
+
+        <div ng-class="{one:true}"></div>
+
+        <input type="text"  ng-disabled="false">
+
+        <div ng-show="true"></div>
+         -->
+        <!-- <p>{{msg}}</p>
+        <img src="{{path}}" alt="">
+        <span>{{msg}}</span> -->
+
+        <div ng-show="flag"></div>
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.flag = true;
+            $scope.msg = "小明1";
+            $scope.path = "./images/guanguan.jpg";
+        }]);
+    </script>
+</body>
+</html>

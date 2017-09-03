@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. $interval服务.
+       这是1个函数.
+       每隔指定的时间就做指定的事情.
+       $interval(fn,time);
+    
+    -->
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        {{now|date:"yyyy-MM-dd HH:mm:ss"}}
+        <br>
+        <button ng-click="stop()">停止</button>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+        app.controller("demoCtrl",["$scope","$interval",function($scope,$interval){
+            $scope.now = new Date;
+            var id = $interval(function(){
+                 $scope.now = new Date;
+            },1000);
+
+            $scope.stop = function(){
+                $interval.cancel(id);
+            }
+        }]);
+    </script>
+</body>
+</html>

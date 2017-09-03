@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--
+
+
+    
+    <script>
+        function processWeatherData(data){
+            console.log(data);
+        }
+    </script>
+    <script src="https://api.asilu.com/weather/?city=深圳&callback=processWeatherData"></script>
+    -->
+
+
+    <script>
+        function jsonp(opts){
+            //1.拼接url
+            var url = opts.url + "?";
+            for(var key in opts.params){
+                url += (key+"="+opts.params[key]+"&");
+            }
+          
+            //https://api.asilu.com/weather/?city=深圳&days=6&
+            // 继续拼接callback
+            window.hmCallback = opts.callback;
+            url += "callback=hmCallback";
+            //2.创建script标签.
+            var script =document.createElement("script");
+            script.src = url;
+            //document.body.appendChild(script);
+            document.body.appendChild(script);
+            
+        }
+
+    
+        function getW(){
+            jsonp({
+                url:"https://api.asilu.com/weather/",
+                params:{
+                    city:"深圳",
+                    days:6
+                },
+                callback:function(data){
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getW()">跨域请求</button>
+</body>
+</html>

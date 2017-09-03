@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--
+    1. 解决跨域 jsonp
+       
+       1.1 我们会先准备1个函数 假如名字叫做demo.
+           这个函数一般情况下会有1个参数data
+
+       1.2 利用script的src属性发起跨域请求.
+           发请求的时候,需要将我事先准备好的函数名字发给服务器.
+        
+       1.3 在服务器端
+           接收到浏览器传递过来的函数的名字.
+           然后再处理数据.
+           当数据处理完毕之后,返回的数据的格式是这样.
+           demo(json数组);
+
+       1.4 当浏览器接收到服务器返回的数据以后.
+           会将返回的数据当做js代码执行.
+           这个时候,我们事先准备的demo函数就会备执行.
+           参数data就是服务器真正返回的数据.
+
+           所以,我们应该在demo函数中处理服务器返回的数据.
+
+
+    -->
+    <script>
+        function demo(data){
+            console.log(data);
+        }
+    </script>
+    <script src="./php/stus.php?callback=demo"></script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. ng-model指令.
+       该指令只能作用在表单元素身上.
+       这个指令的作用:给值得时候, 声明1个变量.
+       使用ng-model声明的变量,实际上就是声明在$scope中的.在控制器中可以拿到值
+
+    2. 使用ng-model声明的变量非常的特殊
+       2.1 表单元素的值如果发生了变化,那么使用ng-model声明的变量的值也会跟随着一起变化.
+       2.2 如果使用ng-model声明的变量的值发生了变化.那么这个表单元素的值也会跟着一起发生变化.
+
+    3. 在AngularJS中.不推崇DOM操作。
+       因为DOM的刷新是AngularJS自动的.
+
+       当数据模型的值发生变化的时候,ng就会自动的刷新DOM.,
+       存储在$scope中的数据一旦发生了变化.ng就会自动的刷新视图.
+    
+    -->
+    <style>
+        .one{
+            width: 100px;
+            height: 100px;
+            background-color:yellowgreen;
+        }
+    </style>
+</head>
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <!-- <input type="text" ng-model="val"> <br>
+        <h1>{{val}}</h1>
+
+        <button ng-click="demo()">按钮</button> -->
+
+        <input type="checkbox" ng-model="switch">开关
+        <!-- 被选中的值: true -->
+
+        <br>
+        <div class="one" ng-show="switch"></div>
+        
+
+    </div>
+
+    <script>
+        var app = angular.module("hmApp",[]);
+
+        app.controller("demoCtrl",["$scope",function($scope){
+            $scope.demo = function(){
+                $scope.val = "传智播客!";
+            }
+        }]);
+    </script>
+</body>
+</html>

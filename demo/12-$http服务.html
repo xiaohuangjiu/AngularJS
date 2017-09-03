@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/angular.min.js"></script>
+    <!--
+    1. 当我们以post方式向服务器发送数据的时候.
+       数据的格式默认是: Request Payload。
+       而这种格式的数据 服务器是不会解析接收的.
+
+       服务器只会接收form Data
+       我们需要将Request Payload格式的数据转换为form Data
+
+       xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    
+    2. $http服务.
+       首先,这是1个函数.
+       功能: 可以向服务器发起ajax异步请求.
+
+       如何使用:
+       $http({})传入1个对象,通过对象的键值对来指定ajax请求的参数.
+       传入的对象的键值对介绍.
+       url:"" 请求的服务器的页面路径.
+       method:"" 指定请求的方式.get post
+       params: {} 当请求的方式为get的时候,传递到服务器的数据就以键值对写到这个对象中.
+       data: "",当请求的方式为post的时候,发送到服务器的数据要写在这个属性中.
+
+
+       使用链式编程的方式,点1个then方法出来.传入两个回调
+       第1个回调:在ajax请求成功的时候执行. 
+                这个回调有1个参数 response
+                代表服务器返回的数据.
+
+       第2个回调:在ajax请求失败的时候执行.
+       
+    3. 
+
+
+
+    -->
+</head>
+
+<body ng-app="hmApp">
+    <div ng-controller="demoCtrl">
+        <button ng-click="get()">$http服务发起get</button>
+        <button ng-click="post()">$http服务发起post</button>
+    </div>
+
+    <script>
+        var app = angular.module("hmApp", []);
+        app.controller("demoCtrl", ["$scope", "$http", function ($scope, $http) {
+            $scope.get = function () {
+                $http({
+                    url: "./php/get.php",
+                    method: "get",
+                    params: {
+                        name: "jack",
+                        age: 18
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                }, function () {
+                    console.log("error!");
+                })
+            };
+
+
+            $scope.post =function(){
+                $http({
+                    url:"./php/post.php",
+                    method:"post",
+                    data:"uName=jack&pwd=123456",
+                    headers:{
+                        "Content-type":"application/x-www-form-urlencoded"
+                    }
+                }).then(function(response){
+                    console.log(response.data);
+                }).catch(function(){
+                    console.log("error!");
+                });
+            }
+
+        }]);
+    </script>
+</body>
+
+</html>

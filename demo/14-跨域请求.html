@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--
+    1. 跨域请求.
+       当我们以ajax的方式请求资源的时候,请求的资源只能是本域的资源.
+       无法跨域请求资源.
+
+       同源策略.
+
+
+    2. 如何解决.
+       无论如何ajax是无法发起跨域请求的.
+
+
+    3. script标签.
+       它的src属性,用来引入外部的一个js文件.
+       src属性的特点
+       > 将外部的js文件引入
+       > 将其中代码执行一次
+
+       CDN: 内容分发网络.
+       1个项目中用到了30个第三方框架.
+       src属性:天然支持跨域的.
+
+
+       src属性.只能请求js文件吗?
+       script标签可以请求任意格式的文件.不管请求回来的是什么数据.都会将其作为js代码执行.
+       
+    4. 如何解决跨域访问
+       
+    
+  
+
+    -->
+    <script>
+        function demo(){
+            var a = 1;
+            a++;
+            alert("我是demo函数"+a);
+        }
+    </script>
+    <script src="./aaa.txt"></script>
+    
+  
+
+
+    <script>
+        function getWeather(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("get","https://api.asilu.com/weather/?city=深圳");
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getWeather()">请求天气</button>
+</body>
+</html>
